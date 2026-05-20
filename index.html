@@ -377,15 +377,11 @@
 <body>
 
 <!-- Music toggle -->
-<button class="music-btn" id="musicBtn" title="播放音乐" onclick="toggleMusic()">
-  <svg id="musicIconPlay" viewBox="0 0 24 24" fill="currentColor">
+<button class="music-btn" id="musicBtn" title="播放音乐" onclick="document.getElementById('musicSection').scrollIntoView({behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
     <path d="M9 18V5l12-2v13"/>
     <circle cx="6" cy="18" r="3"/>
     <circle cx="18" cy="16" r="3"/>
-  </svg>
-  <svg id="musicIconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
-    <rect x="5" y="4" width="5" height="16" rx="1"/>
-    <rect x="14" y="4" width="5" height="16" rx="1"/>
   </svg>
 </button>
 
@@ -488,20 +484,29 @@
 <div class="heart-divider" style="color: var(--secondary); font-size: 2rem;">&hearts;</div>
 
 <!-- Footer -->
+<!-- Music player -->
+<section class="section" id="musicSection" style="padding-top:2rem;padding-bottom:2rem;">
+  <h2 class="section-title reveal">我们的歌</h2>
+  <p style="text-align:center;color:var(--text-muted);margin-bottom:1.5rem;font-size:0.95rem;">
+    郑秀文 · 终身美丽
+  </p>
+  <div class="message-box" style="padding:1rem;max-width:560px;">
+    <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;">
+      <iframe src="//player.bilibili.com/player.html?bvid=BV1E5nuz4EoR&page=1&high_quality=1&danmaku=0"
+       style="position:absolute;top:0;left:0;width:100%;height:100%;"
+       scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+    </div>
+  </div>
+  <p style="text-align:center;color:var(--text-muted);margin-top:1rem;font-size:0.85rem;">
+    任他们多漂亮，未及你矜贵
+  </p>
+</section>
+
 <footer class="footer">
   <p>2025.05.20 &mdash; 致我最爱的你 &mdash; Forever &amp; Always</p>
-  <div style="max-width:330px;margin:1.5rem auto 0;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
-    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="86"
-     src="https://music.163.com/outchain/player?type=2&id=328169&auto=0&height=66"></iframe>
-  </div>
 </footer>
 
 <script>
-// ===== Background music =====
-function toggleMusic() {
-  document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
-}
-
 // ===== Floating hearts =====
 const heartsBg = document.getElementById('heartsBg');
 const heartChars = ['&#x2764;', '&#x1F497;', '&#x1F495;', '&#x1F49B;', '&#x1F49C;', '&#x2661;', '&#x2763;'];
