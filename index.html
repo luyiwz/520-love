@@ -376,12 +376,22 @@
 </head>
 <body>
 
+<!-- Background music -->
+<audio id="bgMusic" loop>
+  <source src="https://api.injahow.cn/meting/?server=netease&type=url&id=328169" type="audio/mpeg">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
 <!-- Music toggle -->
-<button class="music-btn" id="musicBtn" title="播放音乐" onclick="document.getElementById('musicSection').scrollIntoView({behavior:'smooth'})">
-  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+<button class="music-btn" id="musicBtn" title="播放音乐">
+  <svg id="musicIconPlay" viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
     <path d="M9 18V5l12-2v13"/>
     <circle cx="6" cy="18" r="3"/>
     <circle cx="18" cy="16" r="3"/>
+  </svg>
+  <svg id="musicIconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;" width="22" height="22">
+    <rect x="5" y="4" width="5" height="16" rx="1"/>
+    <rect x="14" y="4" width="5" height="16" rx="1"/>
   </svg>
 </button>
 
@@ -484,18 +494,14 @@
 <div class="heart-divider" style="color: var(--secondary); font-size: 2rem;">&hearts;</div>
 
 <!-- Footer -->
-<!-- Music player -->
+<!-- Music section -->
 <section class="section" id="musicSection" style="padding-top:2rem;padding-bottom:2rem;">
   <h2 class="section-title reveal">我们的歌</h2>
   <div class="message-box" style="text-align:center;">
-    <p style="color:var(--text-muted);margin-bottom:1.5rem;font-size:1rem;">
+    <p style="color:var(--text-muted);margin-bottom:0.5rem;font-size:1rem;">
       郑秀文 · 终身美丽
     </p>
-    <a href="https://music.163.com/#/song?id=328169" target="_blank"
-       style="display:inline-block;padding:1rem 2.5rem;background:linear-gradient(135deg,var(--primary),#8B5CF6);color:#fff;border-radius:50px;text-decoration:none;font-size:1.1rem;font-weight:500;transition:all 0.3s ease;box-shadow:0 8px 24px rgba(124,58,237,0.3);">
-      &#x266A; 点我听歌
-    </a>
-    <p style="color:var(--text-muted);margin-top:1.5rem;font-size:0.85rem;line-height:1.8;">
+    <p style="color:var(--text-muted);font-size:0.85rem;line-height:1.8;">
       任他们多漂亮 &nbsp; 未及你矜贵<br>
       因有自信 &nbsp; 所以美丽
     </p>
@@ -507,6 +513,28 @@
 </footer>
 
 <script>
+// ===== Background music =====
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+const iconPlay = document.getElementById('musicIconPlay');
+const iconPause = document.getElementById('musicIconPause');
+let musicPlaying = false;
+
+musicBtn.addEventListener('click', () => {
+  if (musicPlaying) {
+    bgMusic.pause();
+    musicBtn.classList.remove('playing');
+    iconPlay.style.display = '';
+    iconPause.style.display = 'none';
+  } else {
+    bgMusic.play().catch(() => {});
+    musicBtn.classList.add('playing');
+    iconPlay.style.display = 'none';
+    iconPause.style.display = '';
+  }
+  musicPlaying = !musicPlaying;
+});
+
 // ===== Floating hearts =====
 const heartsBg = document.getElementById('heartsBg');
 const heartChars = ['&#x2764;', '&#x1F497;', '&#x1F495;', '&#x1F49B;', '&#x1F49C;', '&#x2661;', '&#x2763;'];
