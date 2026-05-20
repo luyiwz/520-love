@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>520 · 致我最爱的你</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Quicksand:wght@300;400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #7C3AED;
+    --secondary: #A78BFA;
+    --gold: #F59E0B;
+    --bg: #F5F3FF;
+    --text: #4C1D95;
+    --text-muted: #6D28D9;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Quicksand', 'Noto Serif SC', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+
+  /* Floating hearts background */
+  .hearts-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+
+  .heart-float {
+    position: absolute;
+    bottom: -60px;
+    animation: floatUp linear infinite;
+    opacity: 0.35;
+    font-size: 24px;
+  }
+
+  @keyframes floatUp {
+    0%   { transform: translateY(0) rotate(0deg) scale(0.5); opacity: 0; }
+    10%  { opacity: 0.45; }
+    90%  { opacity: 0.3; }
+    100% { transform: translateY(-110vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .hero-date {
+    font-family: 'Caveat', cursive;
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+    animation: fadeInDown 1s ease-out;
+  }
+
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary), #8B5CF6, var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s ease-out 0.2s both;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    margin-top: 1.5rem;
+    max-width: 500px;
+    animation: fadeInUp 1s ease-out 0.4s both;
+    font-weight: 400;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    animation: bounce 2s infinite;
+    color: var(--secondary);
+    cursor: pointer;
+  }
+
+  .scroll-hint svg { width: 32px; height: 32px; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(10px); }
+  }
+
+  /* Section shared */
+  .section {
+    position: relative;
+    z-index: 1;
+    padding: 5rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2.25rem;
+    text-align: center;
+    color: var(--text);
+    margin-bottom: 3rem;
+  }
+
+  /* Love Counter */
+  .counter-card {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .counter-number {
+    font-family: 'Caveat', cursive;
+    font-size: 5rem;
+    color: var(--primary);
+    line-height: 1;
+  }
+
+  .counter-label {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Memory Cards */
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .memory-card {
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(167,139,250,0.25);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .memory-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(124,58,237,0.12);
+  }
+
+  .memory-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .memory-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+
+  .memory-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* Message */
+  .message-box {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(167,139,250,0.3);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    max-width: 650px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .message-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.15rem;
+    line-height: 2.2;
+    color: var(--text);
+  }
+
+  .signature {
+    font-family: 'Caveat', cursive;
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-top: 2rem;
+  }
+
+  /* Gallery placeholder */
+  .gallery-placeholder {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .gallery-slot {
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(124,58,237,0.1));
+    border: 2px dashed rgba(167,139,250,0.4);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .gallery-slot:hover {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, rgba(167,139,250,0.3), rgba(124,58,237,0.2));
+  }
+
+  .gallery-slot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  .gallery-slot .add-hint {
+    color: var(--secondary);
+    font-size: 2rem;
+  }
+
+  /* Heart Divider */
+  .heart-divider {
+    text-align: center;
+    padding: 2rem 0;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50%       { transform: scale(1.08); opacity: 1; }
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Rose petals falling (subtle) */
+  .petal {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    animation: petalFall linear infinite;
+  }
+
+  @keyframes petalFall {
+    0%   { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; }
+    10%  { opacity: 0.5; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(110vh) rotate(720deg) translateX(80px); opacity: 0; }
+  }
+
+  /* Music toggle */
+  .music-btn {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    z-index: 100;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(167,139,250,0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    color: var(--primary);
+  }
+
+  .music-btn:hover {
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 4px 16px rgba(124,58,237,0.15);
+  }
+
+  .music-btn.playing svg {
+    animation: musicSpin 3s linear infinite;
+  }
+
+  @keyframes musicSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .music-btn svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .section { padding: 3rem 1.25rem; }
+    .hero-title { font-size: 2.5rem; }
+    .gallery-placeholder { grid-template-columns: repeat(2, 1fr); }
+    .counter-number { font-size: 3.5rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .heart-float, .petal, .scroll-hint { animation: none; display: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Background music -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://music.163.com/song/media/outer/url?id=328169.mp3" type="audio/mpeg">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Music toggle -->
+<button class="music-btn" id="musicBtn" title="播放音乐">
+  <svg id="musicIconPlay" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3"/>
+    <circle cx="18" cy="16" r="3"/>
+  </svg>
+  <svg id="musicIconPause" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+    <rect x="5" y="4" width="5" height="16" rx="1"/>
+    <rect x="14" y="4" width="5" height="16" rx="1"/>
+  </svg>
+</button>
+
+<!-- Floating hearts -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-date">2025.05.20</p>
+  <h1 class="hero-title">致我最爱的你</h1>
+  <p class="hero-subtitle">
+    遇见你，是我这辈子最幸运的事。<br>
+    往后的每一个春夏秋冬，都想和你一起度过。
+  </p>
+  <div class="scroll-hint" onclick="document.getElementById('counter').scrollIntoView({behavior:'smooth'})">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </div>
+</section>
+
+<!-- Heart divider -->
+<div class="heart-divider" style="color: var(--secondary); font-size: 2rem;">&hearts; &hearts; &hearts;</div>
+
+<!-- Love counter -->
+<section class="section" id="counter">
+  <div class="counter-card reveal">
+    <div class="counter-number" id="daysCount">--</div>
+    <div class="counter-label">我们已经在一起这么久啦</div>
+    <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+      每一天，都是我最珍贵的礼物
+    </p>
+  </div>
+</section>
+
+<!-- Memories -->
+<section class="section">
+  <h2 class="section-title reveal">我们的故事</h2>
+  <div class="memory-grid">
+    <div class="memory-card reveal">
+      <span class="memory-icon">&#x1F493;</span>
+      <h3 class="memory-title">初次相遇</h3>
+      <p class="memory-desc">那天的阳光很好，你的裙摆飘舞飞扬 &mdash; 那一刻我就知道，你是我要找的人。</p>
+    </div>
+    <div class="memory-card reveal">
+      <span class="memory-icon">&#x1F48D;</span>
+      <h3 class="memory-title">携手同行</h3>
+      <p class="memory-desc">一起走过的路、看过的风景、吃过的美食 &mdash; 每一刻都因为有你在而闪闪发光。</p>
+    </div>
+    <div class="memory-card reveal">
+      <span class="memory-icon">&#x1F3E0;</span>
+      <h3 class="memory-title">我们的家</h3>
+      <p class="memory-desc">不大的房子，但充满了温馨和爱。晚饭后的沙发、周末的厨房，都是我最喜欢的角落。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="section">
+  <h2 class="section-title reveal">我们的照片</h2>
+  <p style="text-align:center; color:var(--text-muted); margin-bottom:2rem; font-size:0.95rem;">
+    点击替换成我们的合照吧 &darr;
+  </p>
+  <div class="gallery-placeholder reveal">
+    <div class="gallery-slot" title="点击替换照片">
+      <span class="add-hint">&#x1F4F7;</span>
+    </div>
+    <div class="gallery-slot" title="点击替换照片">
+      <span class="add-hint">&#x1F4F7;</span>
+    </div>
+    <div class="gallery-slot" title="点击替换照片">
+      <span class="add-hint">&#x1F4F7;</span>
+    </div>
+  </div>
+</section>
+
+<!-- Love message -->
+<section class="section">
+  <div class="message-box reveal">
+    <p class="message-text">
+      亲爱的老婆：<br><br>
+      今天是 520，是个说爱的日子。<br>
+      但我想告诉你——<br>
+      我对你的爱，不只在今天，<br>
+      而在每一个平凡又特别的日子里。<br><br>
+      谢谢你包容我的小脾气，<br>
+      谢谢你陪我一起走过风雨，<br>
+      谢谢你让我的世界变得完整。<br><br>
+      往后的日子，<br>
+      我还是会像现在这样，<br>
+      牵着你的手，<br>
+      一直走下去。
+    </p>
+    <p class="signature">永远爱你的老公 &#x2764;</p>
+  </div>
+</section>
+
+<!-- Heart divider -->
+<div class="heart-divider" style="color: var(--secondary); font-size: 2rem;">&hearts;</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>2025.05.20 &mdash; 致我最爱的你 &mdash; Forever &amp; Always</p>
+</footer>
+
+<script>
+// ===== Background music =====
+const bgMusic = document.getElementById('bgMusic');
+const musicBtn = document.getElementById('musicBtn');
+const iconPlay = document.getElementById('musicIconPlay');
+const iconPause = document.getElementById('musicIconPause');
+let musicPlaying = false;
+
+musicBtn.addEventListener('click', () => {
+  if (musicPlaying) {
+    bgMusic.pause();
+    musicBtn.classList.remove('playing');
+    iconPlay.style.display = '';
+    iconPause.style.display = 'none';
+  } else {
+    bgMusic.play().catch(() => {});
+    musicBtn.classList.add('playing');
+    iconPlay.style.display = 'none';
+    iconPause.style.display = '';
+  }
+  musicPlaying = !musicPlaying;
+});
+
+// ===== Floating hearts =====
+const heartsBg = document.getElementById('heartsBg');
+const heartChars = ['&#x2764;', '&#x1F497;', '&#x1F495;', '&#x1F49B;', '&#x1F49C;', '&#x2661;', '&#x2763;'];
+
+for (let i = 0; i < 15; i++) {
+  const heart = document.createElement('span');
+  heart.className = 'heart-float';
+  heart.innerHTML = heartChars[Math.floor(Math.random() * heartChars.length)];
+  heart.style.left = Math.random() * 100 + '%';
+  heart.style.fontSize = (16 + Math.random() * 28) + 'px';
+  heart.style.animationDuration = (8 + Math.random() * 15) + 's';
+  heart.style.animationDelay = Math.random() * 10 + 's';
+  heart.style.opacity = (0.15 + Math.random() * 0.25);
+  heartsBg.appendChild(heart);
+}
+
+// ===== Love day counter =====
+// TODO: Change this date to your actual "together since" date
+const togetherSince = new Date('2017-05-22');
+const today = new Date();
+const diffDays = Math.floor((today - togetherSince) / (1000 * 60 * 60 * 24));
+const daysEl = document.getElementById('daysCount');
+if (daysEl) {
+  // Animate count up
+  let current = 0;
+  const target = diffDays;
+  const duration = 2000;
+  const step = Math.max(1, Math.floor(target / 60));
+  const timer = setInterval(() => {
+    current = Math.min(current + step, target);
+    daysEl.textContent = current.toLocaleString();
+    if (current >= target) clearInterval(timer);
+  }, duration / 60);
+}
+
+// ===== Scroll reveal =====
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+reveals.forEach(el => observer.observe(el));
+
+// ===== Gallery image replace =====
+document.querySelectorAll('.gallery-slot').forEach(slot => {
+  slot.addEventListener('click', () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        slot.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = reader.result;
+        img.alt = '我们的照片';
+        slot.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    };
+    input.click();
+  });
+});
+</script>
+
+</body>
+</html>
