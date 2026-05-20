@@ -389,11 +389,6 @@
   </svg>
 </button>
 
-<!-- NetEase music iframe (hidden, used for audio playback) -->
-<div id="musicPlayerWrap" style="display:none;">
-  <iframe id="musicIframe" frameborder="no" border="0" marginwidth="0" marginheight="0" width="1" height="1"
-   src=""></iframe>
-</div>
 
 <!-- Floating hearts -->
 <div class="hearts-bg" id="heartsBg"></div>
@@ -495,33 +490,16 @@
 <!-- Footer -->
 <footer class="footer">
   <p>2025.05.20 &mdash; 致我最爱的你 &mdash; Forever &amp; Always</p>
+  <div style="max-width:330px;margin:1.5rem auto 0;border-radius:12px;overflow:hidden;background:rgba(255,255,255,0.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="86"
+     src="https://music.163.com/outchain/player?type=2&id=328169&auto=0&height=66"></iframe>
+  </div>
 </footer>
 
 <script>
 // ===== Background music =====
-const musicBtn = document.getElementById('musicBtn');
-const iconPlay = document.getElementById('musicIconPlay');
-const iconPause = document.getElementById('musicIconPause');
-const musicIframe = document.getElementById('musicIframe');
-const musicWrap = document.getElementById('musicPlayerWrap');
-let musicPlaying = false;
-
 function toggleMusic() {
-  if (musicPlaying) {
-    // Pause: remove iframe src to stop
-    musicIframe.src = '';
-    musicBtn.classList.remove('playing');
-    iconPlay.style.display = '';
-    iconPause.style.display = 'none';
-    musicPlaying = false;
-  } else {
-    // Play: set iframe src to NetEase player with autoplay
-    musicIframe.src = 'https://music.163.com/outchain/player?type=2&id=328169&auto=1&height=1';
-    musicBtn.classList.add('playing');
-    iconPlay.style.display = 'none';
-    iconPause.style.display = '';
-    musicPlaying = true;
-  }
+  document.querySelector('footer').scrollIntoView({ behavior: 'smooth' });
 }
 
 // ===== Floating hearts =====
