@@ -376,14 +376,8 @@
 </head>
 <body>
 
-<!-- Background music -->
-<audio id="bgMusic" loop preload="auto">
-  <source src="https://music.163.com/song/media/outer/url?id=328169.mp3" type="audio/mpeg">
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
 <!-- Music toggle -->
-<button class="music-btn" id="musicBtn" title="播放音乐">
+<button class="music-btn" id="musicBtn" title="播放音乐" onclick="toggleMusic()">
   <svg id="musicIconPlay" viewBox="0 0 24 24" fill="currentColor">
     <path d="M9 18V5l12-2v13"/>
     <circle cx="6" cy="18" r="3"/>
@@ -394,6 +388,12 @@
     <rect x="14" y="4" width="5" height="16" rx="1"/>
   </svg>
 </button>
+
+<!-- NetEase music iframe (hidden, used for audio playback) -->
+<div id="musicPlayerWrap" style="display:none;">
+  <iframe id="musicIframe" frameborder="no" border="0" marginwidth="0" marginheight="0" width="1" height="1"
+   src=""></iframe>
+</div>
 
 <!-- Floating hearts -->
 <div class="hearts-bg" id="heartsBg"></div>
@@ -499,26 +499,30 @@
 
 <script>
 // ===== Background music =====
-const bgMusic = document.getElementById('bgMusic');
 const musicBtn = document.getElementById('musicBtn');
 const iconPlay = document.getElementById('musicIconPlay');
 const iconPause = document.getElementById('musicIconPause');
+const musicIframe = document.getElementById('musicIframe');
+const musicWrap = document.getElementById('musicPlayerWrap');
 let musicPlaying = false;
 
-musicBtn.addEventListener('click', () => {
+function toggleMusic() {
   if (musicPlaying) {
-    bgMusic.pause();
+    // Pause: remove iframe src to stop
+    musicIframe.src = '';
     musicBtn.classList.remove('playing');
     iconPlay.style.display = '';
     iconPause.style.display = 'none';
+    musicPlaying = false;
   } else {
-    bgMusic.play().catch(() => {});
+    // Play: set iframe src to NetEase player with autoplay
+    musicIframe.src = 'https://music.163.com/outchain/player?type=2&id=328169&auto=1&height=1';
     musicBtn.classList.add('playing');
     iconPlay.style.display = 'none';
     iconPause.style.display = '';
+    musicPlaying = true;
   }
-  musicPlaying = !musicPlaying;
-});
+}
 
 // ===== Floating hearts =====
 const heartsBg = document.getElementById('heartsBg');
