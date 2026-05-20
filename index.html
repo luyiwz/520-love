@@ -377,7 +377,7 @@
 <body>
 
 <!-- Background music -->
-<audio id="bgMusic" loop>
+<audio id="bgMusic" loop autoplay>
   <source src="https://api.injahow.cn/meting/?server=netease&type=url&id=328169" type="audio/mpeg">
   <source src="music.mp3" type="audio/mpeg">
 </audio>
@@ -516,20 +516,49 @@ const musicBtn = document.getElementById('musicBtn');
 const iconPlay = document.getElementById('musicIconPlay');
 const iconPause = document.getElementById('musicIconPause');
 let musicPlaying = false;
+let musicStarted = false;
 
-musicBtn.addEventListener('click', () => {
+function startMusic() {
+  if (musicStarted) return;
+  bgMusic.play().then(() => {
+    musicStarted = true;
+    musicPlaying = true;
+    musicBtn.classList.add('playing');
+    iconPlay.style.display = 'none';
+    iconPause.style.display = '';
+  }).catch(() => {});
+}
+
+// Autoplay: try immediately, fallback to first user interaction
+bgMusic.play().then(() => {
+  musicStarted = true;
+  musicPlaying = true;
+  musicBtn.classList.add('playing');
+  iconPlay.style.display = 'none';
+  iconPause.style.display = '';
+}).catch(() => {
+  // Browser blocked autoplay, wait for first interaction
+  document.addEventListener('click', startMusic, { once: true });
+  document.addEventListener('touchstart', startMusic, { once: true });
+});
+
+musicBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
   if (musicPlaying) {
     bgMusic.pause();
     musicBtn.classList.remove('playing');
     iconPlay.style.display = '';
     iconPause.style.display = 'none';
+    musicPlaying = false;
   } else {
-    bgMusic.play().catch(() => {});
+    bgMusic.play().then(() => {
+      musicStarted = true;
+    }).catch(() => {});
     musicBtn.classList.add('playing');
     iconPlay.style.display = 'none';
     iconPause.style.display = '';
+    musicPlaying = true;
   }
-  musicPlaying = !musicPlaying;
 });
 
 // ===== Floating hearts =====
