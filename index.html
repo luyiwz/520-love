@@ -453,18 +453,15 @@
 <!-- Gallery -->
 <section class="section">
   <h2 class="section-title reveal">我们的照片</h2>
-  <p style="text-align:center; color:var(--text-muted); margin-bottom:2rem; font-size:0.95rem;">
-    点击替换成我们的合照吧 &darr;
-  </p>
   <div class="gallery-placeholder reveal">
-    <div class="gallery-slot" title="点击替换照片">
-      <span class="add-hint">&#x1F4F7;</span>
+    <div class="gallery-slot">
+      <img src="微信图片_20260520210552_3_21.jpg" alt="我们的合照" loading="lazy">
     </div>
-    <div class="gallery-slot" title="点击替换照片">
-      <span class="add-hint">&#x1F4F7;</span>
+    <div class="gallery-slot">
+      <img src="微信图片_20260520211202_13_1.jpg" alt="我们的合照" loading="lazy">
     </div>
-    <div class="gallery-slot" title="点击替换照片">
-      <span class="add-hint">&#x1F4F7;</span>
+    <div class="gallery-slot">
+      <img src="微信图片_20260520211227_14_1.jpg" alt="我们的合照" loading="lazy">
     </div>
   </div>
 </section>
@@ -582,28 +579,6 @@ const observer = new IntersectionObserver((entries) => {
 
 reveals.forEach(el => observer.observe(el));
 
-// ===== Gallery image replace =====
-document.querySelectorAll('.gallery-slot').forEach(slot => {
-  slot.addEventListener('click', () => {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = 'image/*';
-    input.onchange = (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        slot.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = reader.result;
-        img.alt = '我们的照片';
-        slot.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    };
-    input.click();
-  });
-});
 </script>
 
 </body>
